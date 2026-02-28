@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>مُحاكي - اللعبة</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="card">
+  <h2>👑 الهوست: <span id="hostDisplay"></span></h2>
+
+  <div class="top-bar">
+    <span id="team1Display"></span>: <b id="score1">0</b>
+    <span id="team2Display"></span>: <b id="score2">0</b>
+  </div>
+
+  <h2 id="question">جاري التحميل...</h2>
+  <div id="answers"></div>
+
+  <button onclick="nextQuestion()">السؤال التالي</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

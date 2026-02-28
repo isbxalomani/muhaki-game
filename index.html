@@ -8,18 +8,48 @@
 </head>
 <body>
 
-<div class="container">
+<div class="card">
   <h1>🎮 مُحاكي</h1>
-  <p id="category">الفئة: مُحاكي</p>
 
-  <h2 id="question">السؤال هنا</h2>
+  <h3>👑 اسم الهوست</h3>
+  <input type="text" id="hostName" placeholder="اكتب اسم الهوست">
 
-  <div id="answers"></div>
+  <h3>👥 الفريق الأول</h3>
+  <input type="text" id="team1" placeholder="اسم الفريق الأول">
 
-  <p>النقاط: <span id="score">0</span></p>
-  <button onclick="nextQuestion()">سؤال جديد</button>
+  <h3>👥 الفريق الثاني</h3>
+  <input type="text" id="team2" placeholder="اسم الفريق الثاني">
+
+  <h3>📚 اختر الفئة</h3>
+  <select id="category">
+    <option value="muhaki">مُحاكي</option>
+    <option value="random">عشوائيات</option>
+  </select>
+
+  <button onclick="startGame()">بدء اللعبة</button>
 </div>
 
-<script src="script.js"></script>
+<!-- 🔽 هنا تحط السكربت -->
+<script>
+function startGame() {
+  const host = document.getElementById("hostName").value;
+  const team1 = document.getElementById("team1").value;
+  const team2 = document.getElementById("team2").value;
+  const category = document.getElementById("category").value;
+
+  if(!host || !team1 || !team2){
+    alert("يرجى تعبئة جميع الحقول");
+    return;
+  }
+
+  localStorage.setItem("host", host);
+  localStorage.setItem("team1", team1);
+  localStorage.setItem("team2", team2);
+  localStorage.setItem("category", category);
+
+  window.location.href = "game.html";
+}
+</script>
+
 </body>
 </html>
