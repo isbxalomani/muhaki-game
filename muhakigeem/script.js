@@ -1,6 +1,8 @@
-let score = 0;
+let score1 = 0;
+let score2 = 0;
+let currentTeam = 1;
 
-const questions = [
+const muhakiQuestions = [
   {
     question: "ما هي عاصمة عُمان؟",
     answers: ["مسقط", "دبي", "الرياض", "الكويت"],
@@ -10,19 +12,38 @@ const questions = [
     question: "كم عدد كواكب المجموعة الشمسية؟",
     answers: ["7", "8", "9", "10"],
     correct: 1
-  },
-  {
-    question: "من هو مخترع المصباح الكهربائي؟",
-    answers: ["نيوتن", "أينشتاين", "توماس إديسون", "تسلا"],
-    correct: 2
   }
 ];
 
+const randomQuestions = [
+  {
+    question: "كم عدد أيام الأسبوع؟",
+    answers: ["5", "6", "7", "8"],
+    correct: 2
+  },
+  {
+    question: "ما هو أسرع حيوان بري؟",
+    answers: ["الأسد", "الفهد", "النمر", "الحصان"],
+    correct: 1
+  }
+];
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("hostDisplay").innerText = localStorage.getItem("host");
+  document.getElementById("team1Display").innerText = localStorage.getItem("team1");
+  document.getElementById("team2Display").innerText = localStorage.getItem("team2");
+  loadQuestion();
+});
+
 function loadQuestion() {
+  const category = localStorage.getItem("category");
+  const questions = category === "muhaki" ? muhakiQuestions : randomQuestions;
+
   const random = Math.floor(Math.random() * questions.length);
   const q = questions[random];
 
-  document.getElementById("question").innerText = q.question;
+  document.getElementById("question").innerText =
+    `دور ${currentTeam === 1 ? localStorage.getItem("team1") : localStorage.getItem("team2")}\n\n${q.question}`;
 
   const answersDiv = document.getElementById("answers");
   answersDiv.innerHTML = "";
@@ -32,23 +53,23 @@ function loadQuestion() {
     btn.innerText = answer;
     btn.onclick = function() {
       if(index === q.correct) {
-        score++;
+        if(currentTeam === 1){
+          score1++;
+          document.getElementById("score1").innerText = score1;
+        } else {
+          score2++;
+          document.getElementById("score2").innerText = score2;
+        }
         alert("إجابة صحيحة ✅");
       } else {
-        score--;
         alert("إجابة خاطئة ❌");
       }
-      document.getElementById("score").innerText = score;
+      currentTeam = currentTeam === 1 ? 2 : 1;
     };
     answersDiv.appendChild(btn);
   });
 }
 
-function nextQuestion() {
+function nextQuestion(){
   loadQuestion();
 }
-
-loadQuestion();
-fetch("https://api.eaxeli.com/quiz?limit=5")
-  .then(res => res.json())
-  .then(data => console.log(data));
